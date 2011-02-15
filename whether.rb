@@ -27,6 +27,7 @@ helpers do
 end
 
 get '/' do
+  expires 10*60
   @the_weather = the_weather
   erubis :index
 end
