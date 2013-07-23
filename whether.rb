@@ -25,11 +25,11 @@ helpers do
       string.inspect
     end
   end
-  
+
 end
 
 get '/' do
   expires 10*60
   @the_weather = the_weather
-  erubis :index
+  haml :index
 end

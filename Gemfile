@@ -4,4 +4,4 @@ ruby "2.0.0"
 
 gem "sinatra"
 gem "nokogiri"
-gem "erubis"
+gem "haml"
