@@ -1,6 +1,2 @@
-require "rubygems"
-require "bundler/setup"
-
-require 'whether'
+require './whether'
 run Sinatra::Application
-
