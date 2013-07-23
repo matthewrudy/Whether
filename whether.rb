@@ -18,11 +18,9 @@ helpers do
     end
   end
 
-  def weather_picture_or_string(string)
+  def weather_picture_tag(string)
     if picture = weather_picture(string)
       %(<img src="/icons/#{picture}" alt=#{string.inspect} />)
-    else
-      string.inspect
     end
   end
 

@@ -3,8 +3,15 @@
   %head
     %meta( http-equiv="Content-Type" content="text/html; charset=utf-8" )
     %title The Weather In Hong Kong
+    %link( rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/flatly/bootstrap.min.css")
 
   %body
-    %h1
-      The Weather in Hong Kong:
-      %figure= weather_picture_or_string(@the_weather)
+    .container
+      .hero-unit
+        %h1
+          The Weather in Hong Kong
+        %figure
+          = weather_picture_tag(@the_weather)
+          %h2= @the_weather
+
+
