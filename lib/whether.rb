@@ -9,32 +9,50 @@ module Whether
       new.call
     end
 
-    def url
-      "http://newsrss.bbc.co.uk/weather/forecast/85/ObservationsRSS.xml"
-    end
-
     def fetch_url
       open(url)
     end
 
-    def parse_url
+    def parse
       Nokogiri::XML(fetch_url)
     end
 
+    def call(fetcher=BBCXMLFetcher.new)
+      xml = fetcher.call
+      hash = BBCXMLParser.new(xml).call
+      Status.new(hash[:time], hash[:conditions], hash[:temperature])
+    end
+  end
+
+  class BBCXMLFetcher
+    def url
+      "http://newsrss.bbc.co.uk/weather/forecast/85/ObservationsRSS.xml"
+    end
+
     def call
-      Status.from_xml( parse_url )
+      open(url)
+    end
+  end
+
+  class BBCXMLParser < Struct.new(:xml)
+
+    # <title>Thursday at 00:00 HKT:
+    # white cloud. 26&#xB0;C (79&#xB0;F)</title>
+    def call
+      title_text = nokogiri.xpath('//item/title').text
+      _, time, conditions, temperature = *title_text.match(/(\w+ at \d\d\:\d\d HKT)\:\s*(\w[\w ]*\w)\. (\d+)/)
+
+      {time: time, conditions: conditions, temperature: temperature}
+    end
+
+    private
+
+    def nokogiri
+      @nokogiri ||= Nokogiri::XML(xml)
     end
   end
 
   class Status < Struct.new(:time, :conditions, :temperature)
-
-    # <title>Thursday at 00:00 HKT:
-    # white cloud. 26&#xB0;C (79&#xB0;F)</title>
-    def self.from_xml(xml)
-      title_text = xml.xpath('//item/title').text
-      _, time, conditions, temperature = *title_text.match(/(\w+ at \d\d\:\d\d HKT)\:\s*(\w[\w ]*\w)\. (\d+)/)
-      self.new(time, conditions, temperature)
-    end
   end
 
   class App < Sinatra::Application

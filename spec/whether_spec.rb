@@ -7,12 +7,14 @@ describe Whether::HongKongWeather do
     Whether::HongKongWeather.new
   end
 
-  before do
-    subject.should_receive(:fetch_url).and_return(File.open("spec/sample.xml"))
+  class FakeBBCXMLFetcher
+    def call
+      File.open("spec/sample.xml")
+    end
   end
 
-  it "is returns a status" do
-    status = subject.call
+  it "returns a status" do
+    status = subject.call(FakeBBCXMLFetcher.new)
     status.conditions.should == "white cloud"
     status.time.should == "Thursday at 00:00 HKT"
     status.temperature.should == "26"
