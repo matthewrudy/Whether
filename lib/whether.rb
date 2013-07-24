@@ -107,7 +107,6 @@ module Whether
     end
 
     get '/' do
-      expires 10*60
       @weather = HongKongWeather.now_cached
       haml :index
     end
