@@ -1,0 +1,33 @@
+!!!
+%html( lang="en" )
+  %head
+    %meta( http-equiv="Content-Type" content="text/html; charset=utf-8" )
+    %title The Weather In Hong Kong
+    %link( rel="stylesheet" href="/css/bootstrap.min.css" )
+    %link( rel="stylesheet" href="/css/bootstrap-responsive.min.css" )
+    %link( rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700,900,400italic" )
+
+    :css
+      .weather-thumbnail { padding: 10px; text-align: center; }
+      .weather-thumbnail.caption { padding: 9px; color: #95a5a6; }
+      .weather-figure { height: 128px }
+      h2.massive{ line-height: 1.1em; font-size: 5em; }
+
+  %body
+    .container
+      .hero-unit
+        %h1
+          The Weather in Hong Kong
+        .row-fluid
+          %ul.thumbnails
+            %li.span6
+              .weather-thumbnail
+                .weather-figure= weather_picture_tag(@weather.conditions)
+                .caption
+                  %h2= @weather.conditions
+            %li.span6
+              .weather-thumbnail
+                .weather-figure
+                  %h2.massive 22&deg;C
+                .caption
+                  %h2 9:23pm HKT

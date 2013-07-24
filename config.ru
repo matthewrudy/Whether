@@ -1,2 +1,2 @@
-require './whether'
-run Sinatra::Application
+require './lib/whether'
+run Whether::App
