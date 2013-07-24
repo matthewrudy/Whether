@@ -5,8 +5,13 @@ require 'nokogiri'
 module Whether
 
   class HongKongWeather
+
+    def self.now_cached
+      self.new.call CachingDelegator.new(BBCXMLFetcher.new, "bbc:weather:hongkong")
+    end
+
     def self.now
-      new.call
+      self.new.call
     end
 
     def fetch_url
@@ -31,6 +36,33 @@ module Whether
 
     def call
       open(url)
+    end
+  end
+
+  require 'memcachier'
+  require 'dalli'
+
+  class CachingDelegator
+
+    def initialize(target, cache_key)
+      @target = target
+      @cache_key = cache_key
+    end
+
+    def call
+      cache_client.fetch(@cache_key, cache_expiry) do
+        @target.call
+      end
+    end
+
+    private
+
+    def cache_expiry
+      5*60 # 5 minutes
+    end
+
+    def cache_client
+      @cache_client ||= Dalli::Client.new
     end
   end
 
@@ -76,7 +108,7 @@ module Whether
 
     get '/' do
       expires 10*60
-      @weather = HongKongWeather.now
+      @weather = HongKongWeather.now_cached
       haml :index
     end
   end
