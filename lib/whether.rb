@@ -2,19 +2,41 @@ require 'open-uri'
 require 'sinatra'
 require 'nokogiri'
 
-class HongKongWeather < Struct.new(:conditions)
-  def self.now
-    from_xml(Nokogiri::XML(open("http://newsrss.bbc.co.uk/weather/forecast/85/ObservationsRSS.xml")))
-  end
-
-  def self.from_xml(xml)
-    title_text = xml.xpath('//item/title').text
-    conditions = title_text.split("\n")[1].split(".").first
-    self.new(conditions)
-  end
-end
-
 module Whether
+
+  class HongKongWeather
+    def self.now
+      new.call
+    end
+
+    def url
+      "http://newsrss.bbc.co.uk/weather/forecast/85/ObservationsRSS.xml"
+    end
+
+    def fetch_url
+      open(url)
+    end
+
+    def parse_url
+      Nokogiri::XML(fetch_url)
+    end
+
+    def call
+      Status.from_xml( parse_url )
+    end
+  end
+
+  class Status < Struct.new(:time, :conditions, :temperature)
+
+    # <title>Thursday at 00:00 HKT:
+    # white cloud. 26&#xB0;C (79&#xB0;F)</title>
+    def self.from_xml(xml)
+      title_text = xml.xpath('//item/title').text
+      _, time, conditions, temperature = *title_text.match(/(\w+ at \d\d\:\d\d HKT)\:\s*(\w[\w ]*\w)\. (\d+)/)
+      self.new(time, conditions, temperature)
+    end
+  end
+
   class App < Sinatra::Application
     helpers do
 

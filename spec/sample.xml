@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://feeds.bbc.co.uk/weather/feeds/rss/weather.xsl"?>
+<rss version="2.0" xmlns:blogChannel="http://backend.userland.com/blogChannelModule" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#">
+<channel>
+<title>BBC - Weather Centre - Latest Observations for Hong Kong, China</title>
+<link>http://news.bbc.co.uk/weather/forecast/85</link>
+<description>by the BBC Weather Centre in association with the Met Office</description>
+<language>en</language>
+<copyright>Copyright: (C) British Broadcasting Corporation</copyright>
+<pubDate>Thu, 25 Jul 2013 00:50:00 +0800</pubDate>
+<lastBuildDate>Thu, 25 Jul 2013 00:50:00 +0800</lastBuildDate>
+<managingEditor>weather@bbc.co.uk</managingEditor>
+<webMaster>weather@bbc.co.uk</webMaster>
+
+<item>
+<title>Thursday at 00:00 HKT: 
+white cloud. 26&#xB0;C (79&#xB0;F)</title>
+<link>http://news.bbc.co.uk/weather/forecast/85</link>
+<description>Temperature: 26&#xB0;C (79&#xB0;F), Wind Direction: ESE, Wind Speed: 11mph, Relative Humidity: 85&#37;, Pressure: 1006mb, rising, Visibility: VG</description>
+<guid isPermaLink="false">http://newsrss.bbc.co.uk/weather/forecast/85#2013-07-25T00:50:00+08:00</guid>
+<pubDate>Thu, 25 Jul 2013 00:50:00 +0800</pubDate>
+<geo:lat>22.32</geo:lat>
+<geo:long>113.92</geo:long>
+</item>
+
+</channel>
+</rss>
