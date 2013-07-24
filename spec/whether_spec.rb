@@ -9,7 +9,7 @@ describe Whether::HongKongWeather do
 
   class FakeBBCXMLFetcher
     def call
-      File.open("spec/sample.xml")
+      File.read("spec/sample.xml")
     end
   end
 

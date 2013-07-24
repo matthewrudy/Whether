@@ -35,7 +35,7 @@ module Whether
     end
 
     def call
-      open(url)
+      open(url).read
     end
   end
 
