@@ -20,7 +20,7 @@ module Whether
     def call(fetcher=BBCXMLFetcher.new)
       xml = fetcher.call
       hash = BBCXMLParser.new(xml).call
-      Status.new(hash[:time], hash[:conditions], hash[:temperature])
+      Status.new(hash[:time], hash[:conditions], hash[:temperature_c], hash[:temperature_f])
     end
   end
 
@@ -40,9 +40,9 @@ module Whether
     # white cloud. 26&#xB0;C (79&#xB0;F)</title>
     def call
       title_text = nokogiri.xpath('//item/title').text
-      _, time, conditions, temperature = *title_text.match(/(\w+ at \d\d\:\d\d HKT)\:\s*(\w[\w ]*\w)\. (\d+)/)
+      _, time, conditions, temperature_c, temperature_f = *title_text.match(/(\w+ at \d\d\:\d\d HKT)\:\s*(\w[\w ]*\w)\. (\d+).+C \((\d+).+F\)/)
 
-      {time: time, conditions: conditions, temperature: temperature}
+      {time: time, conditions: conditions, temperature_c: temperature_c, temperature_f: temperature_f}
     end
 
     private
@@ -52,7 +52,7 @@ module Whether
     end
   end
 
-  class Status < Struct.new(:time, :conditions, :temperature)
+  class Status < Struct.new(:time, :conditions, :temperature_c, :temperature_f)
   end
 
   class App < Sinatra::Application

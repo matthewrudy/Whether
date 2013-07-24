@@ -18,6 +18,7 @@
       .hero-unit
         %h1
           The Weather in Hong Kong
+          %small= @weather.time
         .row-fluid
           %ul.thumbnails
             %li.span6
@@ -29,7 +30,10 @@
               .weather-thumbnail
                 .weather-figure
                   %h2.massive
-                    = @weather.temperature
+                    = @weather.temperature_c
                     &deg;C
                 .caption
-                  %h2= @weather.time
+                  %h2
+                    = @weather.temperature_f
+                    &deg;F
+
