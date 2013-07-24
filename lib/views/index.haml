@@ -28,6 +28,8 @@
             %li.span6
               .weather-thumbnail
                 .weather-figure
-                  %h2.massive 22&deg;C
+                  %h2.massive
+                    = @weather.temperature
+                    &deg;C
                 .caption
-                  %h2 9:23pm HKT
+                  %h2= @weather.time
