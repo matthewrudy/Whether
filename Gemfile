@@ -11,6 +11,7 @@ gem "nokogiri"
 
 # Testing
 gem "rspec"
+gem "rack-test"
 
 # Caching
 gem "memcachier"
