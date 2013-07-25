@@ -94,7 +94,7 @@ module Whether
         case string
         when "white cloud" then "cloudy5.png"
         when "grey cloud" then "overcast.png"
-        when "light rain" then "light_rain.png"
+        when "light rain", "light rain shower" then "light_rain.png"
         end
       end
 
